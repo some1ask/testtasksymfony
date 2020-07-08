@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,16 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=CV::class, mappedBy="ownerId", orphanRemoval=true,cascade={"persist"})
+     */
+    private $cVs;
+
+    public function __construct()
+    {
+        $this->cVs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -112,5 +124,36 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|CV[]
+     */
+    public function getCVs(): Collection
+    {
+        return $this->cVs;
+    }
+
+    public function addCV(CV $cV): self
+    {
+        if (!$this->cVs->contains($cV)) {
+            $this->cVs[] = $cV;
+            $cV->setOwnerId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCV(CV $cV): self
+    {
+        if ($this->cVs->contains($cV)) {
+            $this->cVs->removeElement($cV);
+            // set the owning side to null (unless already changed)
+            if ($cV->getOwnerId() === $this) {
+                $cV->setOwnerId(null);
+            }
+        }
+
+        return $this;
     }
 }
