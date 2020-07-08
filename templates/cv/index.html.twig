@@ -17,4 +17,8 @@
         <li>Your template at <code><a href="{{ 'C:/OSPanel/domains/testtask/templates/cv/index.html.twig'|file_link(0) }}">templates/cv/index.html.twig</a></code></li>
     </ul>
 </div>
+
+    {% for cv in cvs %}
+        {{ cv.about }}
+    {% endfor %}
 {% endblock %}
