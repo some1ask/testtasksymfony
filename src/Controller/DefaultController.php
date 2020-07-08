@@ -12,8 +12,10 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
+        $user = $this->getUser();
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
+            'user'=>$user
         ]);
     }
 }

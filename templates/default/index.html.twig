@@ -17,4 +17,8 @@
         <li>Your template at <code><a href="{{ 'C:/OSPanel/domains/testtask/templates/default/index.html.twig'|file_link(0) }}">templates/default/index.html.twig</a></code></li>
     </ul>
 </div>
+
+    {% if user %}
+        PRIVET {{ user.username  }}
+    {% endif %}
 {% endblock %}
