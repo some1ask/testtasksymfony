@@ -7,12 +7,13 @@ use App\Entity\User;
 use App\Form\CVFormType;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class CVController extends AbstractController
 {
+
     /**
      * @Route("/resumeList", name="cvs")
      */
@@ -20,12 +21,24 @@ class CVController extends AbstractController
     {
         $cvs = $this->getUser()->getCVs()->toArray();
 
-
         return $this->render('cv/index.html.twig', [
             'controller_name' => 'CVController',
             'cvs'=>$cvs
         ]);
     }
+    /**
+     * @Route("/resumeList/delete/{id}", name="deletecv")
+     */
+    public function deletecv(int $id){
+        $cv = $this->getDoctrine()->getRepository(CV::class)->find($id);
+        $en = $this->getDoctrine()->getManager();
+        $en->remove($cv);
+        $en->flush();
+
+        return $this->redirectToRoute('cvs');
+    }
+
+
     /**
      * @Route("/resumeList/create", name="createcv")
      */
@@ -51,6 +64,7 @@ class CVController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/resumeList/edit/{id}", name="editcv")
      * @param int $id
@@ -67,13 +81,14 @@ class CVController extends AbstractController
             $cv = $form->getData();
             $em->persist($cv);
             $em->flush();
-            $this->addFlash('success', 'Article Created! Knowledge is power!');
-            return $this->render('default/index.html.twig',[
-                'user'=>$this->getUser()
-            ]);
+
+            return $this->redirectToRoute('cvs');
         }
         return $this->render('cv/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+
+
 }

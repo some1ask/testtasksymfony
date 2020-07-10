@@ -1,0 +1,122 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body {
+    background: #76b852; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+    background: -moz-linear-gradient(right, #76b852, #8DC26F);
+    background: -o-linear-gradient(right, #76b852, #8DC26F);
+    background: linear-gradient(to left, #76b852, #8DC26F);
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+}
+.wrapper{
+    max-width: 1276px;
+    padding: 0 30px;
+}
+
+.cv-cards{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px 0 0 0;
+}
+.card-title{
+    text-align: center;
+}
+.card-data{
+    font-size: 12px;
+}
+.card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 3px;
+    background: white;
+    width: 30%;
+    margin:5px;
+    height: 350px;
+}
+.edit{
+    background: #5eb5e0;
+}
+.delete{
+    background: red;
+}
+.companies{
+    margin: 20px 0 0 0;
+}
+.createcomp{
+    background: darkslategray;
+    max-width: 150px;
+}
+.card-link{
+    border-radius: 5px;
+    display: block;
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+}
+.submit{
+    font-size: 16px;
+    border: 0;
+}
+.submit:hover{
+    cursor: pointer;
+}
+.card-body{
+    padding: 5px;
+}
+
+.create{
+    background: #AAAAAA;
+    max-width: 130px;
+}
+.info{
+    background: cornflowerblue;
+}
+.card-dates{
+    height: 50px;
+}
+.card-controls{
+    display: flex;
+    margin: 10px 0;
+    justify-content: space-around;
+}
+.card-text{
+    height: 100px;
+}
+
+.company{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+}

@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="company">
+        <h2>Имя компании: {{ company.name }}</h2>
+        <span>Сайт: {{ company.href }}</span>
+    <span>Адрес: {{ company.address }}</span>
+    <span>Телефон: {{ company.phone }}</span>
+    </div>
+
+{% endblock %}

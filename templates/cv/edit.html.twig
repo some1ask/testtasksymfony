@@ -1,1 +1,8 @@
-{{ form(form) }}
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.position) }}
+    {{ form_row(form.about) }}
+
+    {{ form_row(form.save, { 'label': 'Update' }) }}
+{{ form_end(form) }}

@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CompanyController!{% endblock %}
+
+{% block body %}
+    <div class="wrapper">
+        <h1>Мои компании</h1>
+        <a href="{{ path('createcompany') }}" class="card-link createcomp">Создать компанию</a>
+        <div class="companies">
+            <table>
+            {% for company in companies %}
+                <tr>
+                    <td>{{ company.name }}</td>
+                    <td><a href="{{ path('editcompany', {id: company.id}) }}" class="card-link edit">Редактировать</a></td>
+                    <td><a href="{{ path('companyview', {id: company.id}) }}" class="card-link info">Подробнее</i>
+                    </a>
+                    </td>
+                    <td><form action="{{ path('deletecompany', {id: company.id}) }}" method="POST">
+                            <button type="submit" class="card-link delete submit">Удалить</i>
+                            </button>
+                        </form></td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+
+
+{% endblock %}

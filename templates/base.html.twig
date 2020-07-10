@@ -3,10 +3,28 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+
+        {% endblock %}
+
     </head>
     <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+    <div class="topnav">
+        <a class="active" href="/">Главная страница</a>
+        {% if app.user == null %}
+            <a href="/login">Логин</a>
+            <a href="/register">Регистрация</a>
+        {% endif %}
+        {% if app.user %}
+            <a href="/company">Мои компании</a>
+            <a href="/resumeList">Мои резюме</a>
+            <a href="/logout">Выход</a>
+        {% endif %}
+    </div>
+    {% block body %}
+    {% endblock %}
+    {% block javascripts %}{% endblock %}
     </body>
 </html>
