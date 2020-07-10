@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Company;
 use App\Entity\CV;
 use App\Entity\User;
 use App\Form\CVFormType;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,10 +57,9 @@ class CVController extends AbstractController
             $entity->flush();
 
 
-            return $this->render('default/index.html.twig',[
-                'user'=>$this->getUser()
-            ]);
+            $this->redirectToRoute('cvs');
         }
+
         return $this->render('cv/create.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -88,7 +89,22 @@ class CVController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+    /**
+     * @Route("/resume/send/{id}/{cid}", name="sendcv")
+     * @param int $id
+     * @param int $cid
+     */
+    public function sendcv(int $id,int $cid){
 
+            $cv = $this->getDoctrine()->getRepository(CV::class)->findOneBy(['id'=>$id]);
+            $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$cid]);
+            $en = $this->getDoctrine()->getManager();
+            $en->persist($company->addCv($cv));
+            $en->flush();
+            return $this->redirectToRoute('cvs');
+
+
+    }
 
 
 }

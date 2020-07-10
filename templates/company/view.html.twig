@@ -7,4 +7,9 @@
     <span>Телефон: {{ company.phone }}</span>
     </div>
 
+    {% if cvs %}
+        {% for cv in cvs %}
+            {{ cv.position }}
+        {% endfor %}
+    {% endif %}
 {% endblock %}

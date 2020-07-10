@@ -68,17 +68,32 @@ class CompanyController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    /**
+     * @Route("/company/info/{id}",name="companyinfo")
+     * @param int $id
+     */
+    public function info(int $id){
+        $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$id]);
+        $cvs = $this->getUser()->getCVs();
+        return $this->render('company/info.html.twig',[
+            'company' => $company,
+            'cvs'=>$cvs
+        ]);
+    }
     /**
      * @Route("/company/view/{id}",name="companyview")
      * @param int $id
      */
     public function view(int $id){
         $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$id]);
+        $cvs = $company->getCvs()->toArray();
         return $this->render('company/view.html.twig',[
-           'company' => $company
+           'company' => $company,
+            'cvs'=>$cvs
         ]);
     }
+
+
     /**
      * @Route("/company/delete/{id}", name="deletecompany")
      */

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="company">
+        <h2>Имя компании: {{ company.name }}</h2>
+        <span>Сайт: {{ company.href }}</span>
+        <span>Адрес: {{ company.address }}</span>
+        <span>Телефон: {{ company.phone }}</span>
+    </div>
+    {% if cvs %}
+        <div class="avaliable">Доступные резюме</div>
+        <div class="cv-cards">
+            {% for cv in cvs %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h2 class="card-title">{{ cv.position }}</h2>
+                        <div class="card-text">Обо мне: {{ cv.about }}</div>
+                        <div class="card-dates">
+                            <span class="card-data">Создано: {{ cv.createdat.format('Y-m-d h:i:s') }}</span></br>
+                            {% if cv.updatedat%}
+                                <span class="card-data">Обновлено: {{ cv.updatedat.format('Y-m-d h:i:s') }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-controls">
+                       <form action="{{ path('sendcv',{id:cv.id,cid:company.id}) }}" method="post">
+                           <button type="submit">Отправить</button>
+                       </form>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+{% endblock %}

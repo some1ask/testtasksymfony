@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -42,6 +44,16 @@ class Company
      * @ORM\JoinColumn(nullable=false)
      */
     private $ownerId;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=CV::class, inversedBy="companies")
+     */
+    private $cvs;
+
+    public function __construct()
+    {
+        $this->cvs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +116,32 @@ class Company
     public function setOwnerId(?User $ownerId): self
     {
         $this->ownerId = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CV[]
+     */
+    public function getCvs(): Collection
+    {
+        return $this->cvs;
+    }
+
+    public function addCv(CV $cv): self
+    {
+        if (!$this->cvs->contains($cv)) {
+            $this->cvs[] = $cv;
+        }
+
+        return $this;
+    }
+
+    public function removeCv(CV $cv): self
+    {
+        if ($this->cvs->contains($cv)) {
+            $this->cvs->removeElement($cv);
+        }
 
         return $this;
     }

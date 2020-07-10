@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CVRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,9 +45,15 @@ class CV
      */
     private $ownerId;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Company::class, mappedBy="cvs")
+     */
+    private $companies;
+
     public function __construct()
     {
         $this->created_at = new \DateTime('now');
+        $this->companies = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +117,34 @@ class CV
     public function setOwnerId(?User $ownerId): self
     {
         $this->ownerId = $ownerId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Company[]
+     */
+    public function getCompanies(): Collection
+    {
+        return $this->companies;
+    }
+
+    public function addCompany(Company $company): self
+    {
+        if (!$this->companies->contains($company)) {
+            $this->companies[] = $company;
+            $company->addCv($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompany(Company $company): self
+    {
+        if ($this->companies->contains($company)) {
+            $this->companies->removeElement($company);
+            $company->removeCv($this);
+        }
 
         return $this;
     }

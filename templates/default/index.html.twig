@@ -6,5 +6,11 @@
 
     {% if user %}
         PRIVET {{ user.username  }}
+
+    {% if companies %}
+        {% for company in companies %}
+            <a href="{{ path('companyinfo',{ id:company.id }) }}">{{ company.name }}</a>
+        {% endfor %}
+    {% endif %}
     {% endif %}
 {% endblock %}
