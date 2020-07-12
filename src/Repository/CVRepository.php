@@ -35,7 +35,15 @@ class CVRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllbyDESC(): array
+    {
+        $ent = $this->getEntityManager();
 
+        $query = $ent->createQuery(
+            'SELECT c FROM App\Entity\CV c ORDER BY c.likes DESC'
+        );
+        return $query->getArrayResult();
+    }
     /*
     public function findOneBySomeField($value): ?CV
     {

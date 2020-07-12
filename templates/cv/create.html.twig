@@ -1,6 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-{{ form(form) }}
-
+{{ form_start(form) }}
+        <ul class="form-style-1">
+            <li>{{ form_row(form.position,{'attr':{'class':'field-long'}}) }}</li>
+            <li>
+               {{ form_row(form.about,{'attr':{'class':"field-long field-textarea"}}) }}
+            </li>
+            <li>
+                {{ form_row(form.save) }}
+            </li>
+        </ul>
+{{ form_end(form) }}
 {% endblock %}

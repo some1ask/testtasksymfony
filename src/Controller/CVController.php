@@ -25,13 +25,15 @@ class CVController extends AbstractController
 
         return $this->render('cv/index.html.twig', [
             'controller_name' => 'CVController',
-            'cvs'=>$cvs
+            'cvs' => $cvs
         ]);
     }
+
     /**
      * @Route("/resumeList/delete/{id}", name="deletecv")
      */
-    public function deletecv(int $id){
+    public function deletecv(int $id)
+    {
         $cv = $this->getDoctrine()->getRepository(CV::class)->find($id);
         $en = $this->getDoctrine()->getManager();
         $en->remove($cv);
@@ -44,18 +46,17 @@ class CVController extends AbstractController
     /**
      * @Route("/resumeList/create", name="createcv")
      */
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $CV = new CV();
-        $form = $this->createForm(CVFormType::class,$CV);
+        $form = $this->createForm(CVFormType::class, $CV);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $CV = $form->getData();
-            $this->getUser()->addCV($CV);
             $entity = $this->getDoctrine()->getManager();
-            $entity->persist($CV);
+            $entity->persist($this->getUser()->addCV($CV));
             $entity->flush();
-
 
             $this->redirectToRoute('cvs');
         }
@@ -73,8 +74,9 @@ class CVController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function edit(int $id,CV $cv,Request $request){
-        $form = $this->createForm(CVFormType::class,$cv);
+    public function edit(int $id, CV $cv, Request $request)
+    {
+        $form = $this->createForm(CVFormType::class, $cv);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $cv->setUpdatedAt(new \DateTime('now'));
@@ -89,22 +91,59 @@ class CVController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
     /**
      * @Route("/resume/send/{id}/{cid}", name="sendcv")
      * @param int $id
      * @param int $cid
      */
-    public function sendcv(int $id,int $cid){
+    public function sendcv(int $id, int $cid)
+    {
 
-            $cv = $this->getDoctrine()->getRepository(CV::class)->findOneBy(['id'=>$id]);
-            $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$cid]);
-            $en = $this->getDoctrine()->getManager();
-            $en->persist($company->addCv($cv));
-            $en->flush();
-            return $this->redirectToRoute('cvs');
+        $cv = $this->getDoctrine()->getRepository(CV::class)->findOneBy(['id' => $id]);
+        $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id' => $cid]);
+        $en = $this->getDoctrine()->getManager();
+        $en->persist($company->addCv($cv));
+        $en->flush();
+        return $this->redirectToRoute('cvs');
 
 
     }
 
+    /**
+     * @Route("/resume/like/{id}", name="like")
+     *
+     */
+    public function like(int $id)
+    {
+        $cv = $this->getDoctrine()->getRepository(CV::class)->findOneBy(['id' => $id]);
+        $en = $this->getDoctrine()->getManager();
+        $en->persist($cv->setLikes($cv->getLikes() + 1));
+        $en->flush();
+        return $this->redirectToRoute('company');
+    }
 
+    /**
+     * @Route("/resume/dislike/{id}", name="dislike")
+     *
+     */
+    public function dislike(int $id)
+    {
+        $cv = $this->getDoctrine()->getRepository(CV::class)->findOneBy(['id' => $id]);
+        $en = $this->getDoctrine()->getManager();
+        $en->persist($cv->setDislikes($cv->getDislikes() + 1));
+        $en->flush();
+        return $this->redirectToRoute('company');
+    }
+
+    /**
+     * @Route("/resumeList/stats" , name="stats")
+     */
+    public function stats()
+    {
+        $cvs = $this->getDoctrine()->getRepository(CV::class)->findAllbyDESC();
+        return $this->render('cv/stats.html.twig', [
+            'cvs' => $cvs
+        ]);
+    }
 }

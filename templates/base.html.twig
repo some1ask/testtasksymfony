@@ -14,13 +14,15 @@
     <div class="topnav">
         <a class="active" href="/">Главная страница</a>
         {% if app.user == null %}
-            <a href="/login">Логин</a>
-            <a href="/register">Регистрация</a>
+            <a href={{ path('app_login') }}>Логин</a>
+            <a href={{ path('app_register') }}>Регистрация</a>
         {% endif %}
         {% if app.user %}
-            <a href="/company">Мои компании</a>
-            <a href="/resumeList">Мои резюме</a>
-            <a href="/logout">Выход</a>
+            <a href={{ path('company') }}>Мои компании</a>
+            <a href={{ path('cvs') }}>Мои резюме</a>
+            <a href={{ path('stats') }}>Статистика всех резюме</a>
+            <a href={{ path('app_logout') }}>Выход</a>
+
         {% endif %}
     </div>
     {% block body %}

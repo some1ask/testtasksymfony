@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Company;
 use App\Entity\CV;
+use App\Entity\User;
 use App\Form\CompanyType;
 use App\Form\CVFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -74,7 +75,13 @@ class CompanyController extends AbstractController
      */
     public function info(int $id){
         $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$id]);
-        $cvs = $this->getUser()->getCVs();
+
+        if($this->getUser() == null){
+            $cvs = null;
+        }
+        else{
+            $cvs = $this->getUser()->getCVs();
+        }
         return $this->render('company/info.html.twig',[
             'company' => $company,
             'cvs'=>$cvs
@@ -87,9 +94,10 @@ class CompanyController extends AbstractController
     public function view(int $id){
         $company = $this->getDoctrine()->getRepository(Company::class)->findOneBy(['id'=>$id]);
         $cvs = $company->getCvs()->toArray();
+
         return $this->render('company/view.html.twig',[
            'company' => $company,
-            'cvs'=>$cvs
+            'cvs'=>$cvs,
         ]);
     }
 

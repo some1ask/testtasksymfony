@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<div class="wrapper">
+    <h1>Статистика всех резюме</h1>
+    <table>
+        <tr>
+            <td>Должность</td>
+            <td>Кол-во лайков</td>
+        </tr>
+        {% for cv in cvs %}
+            <tr>
+                <td>{{ cv.position }}</td>
+                <td>
+                    {% if cv.likes %}
+                    {{ cv.likes }}
+                    {% else %}
+                        0
+                        {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}

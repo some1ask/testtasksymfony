@@ -1,5 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+    <div class="wrapper">
     <div class="company">
         <h2>Имя компании: {{ company.name }}</h2>
         <span>Сайт: {{ company.href }}</span>
@@ -8,8 +9,35 @@
     </div>
 
     {% if cvs %}
+        <h2>Пришедшие резюме</h2>
+        <div class="cv-cards">
         {% for cv in cvs %}
-            {{ cv.position }}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h2 class="card-title">{{ cv.position }}</h2>
+                    <div class="card-text">Обо мне: {{ cv.about }}</div>
+                    <div class="card-dates">
+                        <span class="card-owner">Прислал: {{ cv.ownerid.email }}</span><br>
+                        <span class="card-data">Создано: {{ cv.createdat.format('Y-m-d h:i:s') }}</span></br>
+                        {% if cv.updatedat%}
+                            <span class="card-data">Обновлено: {{ cv.updatedat.format('Y-m-d h:i:s') }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-controls">
+                    <form action="{{ path('like', {id: cv.id}) }}" method="POST">
+                        <button type="submit" class="card-link info submit">{{ cv.likes }} <i class="fa fa-thumbs-up"></i></button>
+                    </form>
+                    <form action="{{ path('dislike', {id: cv.id}) }}" method="POST">
+                        <button type="submit" class="card-link delete submit">{{ cv.dislikes }} <i class="fa fa-thumbs-down"></i></button>
+                    </form>
+                </div>
+
+            </div>
+
+
         {% endfor %}
+        </div>
     {% endif %}
+    </div>
 {% endblock %}

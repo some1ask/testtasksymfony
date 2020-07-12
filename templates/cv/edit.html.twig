@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 {{ form_start(form) }}
-    {{ form_errors(form) }}
+    <ul class="form-style-1">
+        <li>{{ form_row(form.position,{'attr':{'class':'field-long'}}) }}</li>
+        <li>
+            {{ form_row(form.about,{'attr':{'class':"field-long field-textarea"}}) }}
+        </li>
+        <li>
+            {{ form_row(form.save,{'label':'Update'}) }}
+        </li>
+    </ul>
 
-    {{ form_row(form.position) }}
-    {{ form_row(form.about) }}
 
-    {{ form_row(form.save, { 'label': 'Update' }) }}
 {{ form_end(form) }}
 {% endblock %}

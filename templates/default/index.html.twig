@@ -3,14 +3,23 @@
 {% block title %}Hello DefaultController!{% endblock %}
 
 {% block body %}
-
+<div class="wrapper">
     {% if user %}
-        PRIVET {{ user.username  }}
+        <h1>Привет {{ user.username  }} !</h1>
 
+    {% else %}
+    <h1>Для работы с приложением необходимо зарегистрироваться или войти!</h1>
+
+    {% endif %}
     {% if companies %}
+        <h2>Компании которые ищут людей</h2>
+        <table>
         {% for company in companies %}
-            <a href="{{ path('companyinfo',{ id:company.id }) }}">{{ company.name }}</a>
+            <tr>
+                <td><a href="{{ path('companyinfo',{ id:company.id }) }}">{{ company.name }}</a></td>
+            </tr>
         {% endfor %}
+        </table>
     {% endif %}
-    {% endif %}
+</div>
 {% endblock %}
