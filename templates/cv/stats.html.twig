@@ -2,15 +2,16 @@
 {% block body %}
 <div class="wrapper">
     <h1>Статистика всех резюме</h1>
+    <div class="stats">
     <table>
         <tr>
-            <td>Должность</td>
-            <td>Кол-во лайков</td>
+            <td><h2>Должность</h2></td>
+            <td><h2>Кол-во лайков</h2></td>
         </tr>
         {% for cv in cvs %}
             <tr>
                 <td>{{ cv.position }}</td>
-                <td>
+                <td style="text-align:right;">
                     {% if cv.likes %}
                     {{ cv.likes }}
                     {% else %}
@@ -20,6 +21,7 @@
             </tr>
         {% endfor %}
     </table>
+    </div>
 </div>
 
 {% endblock %}

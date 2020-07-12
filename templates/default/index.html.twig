@@ -13,6 +13,7 @@
     {% endif %}
     {% if companies %}
         <h2>Компании которые ищут людей</h2>
+        <div class="stats">
         <table>
         {% for company in companies %}
             <tr>
@@ -20,6 +21,7 @@
             </tr>
         {% endfor %}
         </table>
+        </div>
     {% endif %}
 </div>
 {% endblock %}

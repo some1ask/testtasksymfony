@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-    {{ form_start(companyform) }}
+    {{ form_start(form) }}
     <ul class="form-style-1">
-        <li>{{ form_row(companyform.name,{'attr':{'class':'field-long'}}) }}</li>
-        <li> {{ form_row(companyform.href,{'attr':{'class':'field-long'}}) }}</li>
-        <li> {{ form_row(companyform.address,{'attr':{'class':'field-long'}}) }}</li>
-        <li>  {{ form_row(companyform.phone,{'attr':{'class':'field-long'}}) }}</li>
-        <li> {{ form_row(companyform.save, { 'label': 'Update' }) }}</li>
+        <li>{{ form_row(form.name,{'attr':{'class':'field-long'}}) }}</li>
+        <li> {{ form_row(form.href,{'attr':{'class':'field-long'}}) }}</li>
+        <li> {{ form_row(form.address,{'attr':{'class':'field-long'}}) }}</li>
+        <li>  {{ form_row(form.phone,{'attr':{'class':'field-long'}}) }}</li>
+        <li> {{ form_row(form.save, { 'label': 'Update' }) }}</li>
 
     </ul>
-    {{ form_end(companyform) }}
+    {{ form_end(form) }}
 
 {% endblock %}

@@ -15,7 +15,17 @@ body {
     max-width: 1276px;
     padding: 0 30px;
 }
-
+.stats{
+    font-size: 18px;
+}
+.stats table{
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+.stats table td{
+    border: 1px solid black;
+    padding: 10px;
+}
 .cv-cards{
     display: flex;
     flex-wrap: wrap;
@@ -74,6 +84,7 @@ body {
     background: #AAAAAA;
     max-width: 130px;
 }
+
 .info{
     background: cornflowerblue;
 }
